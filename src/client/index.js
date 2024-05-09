@@ -1,5 +1,6 @@
 import React, { StrictMode } from 'react';
 import { hydrateRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
@@ -12,9 +13,11 @@ const store = createStore(rootReducer, window.__STATE__);
 // Mount app to existing DOM
 hydrateRoot(
   document.getElementById('editor'),
-  <Provider store={ store }>
-    <StrictMode>
-      <App/>
-    </StrictMode>
-  </Provider>
+  <BrowserRouter>
+    <Provider store={ store }>
+      <StrictMode>
+        <App/>
+      </StrictMode>
+    </Provider>
+  </BrowserRouter>
 );

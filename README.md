@@ -1,7 +1,7 @@
-# Quick Guide to Server Side Rendering with React and Redux
+# Quick Guide to SSR with React, Redux, and ReactRouter
 
 This guide provides a quick overview of how to use Server Side Rendering (SSR) with React@18 and an older version of
-Redux.
+Redux and ReactRouter.
 
 ## Building the Project
 
