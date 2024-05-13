@@ -1,3 +1,4 @@
 /.idea
+/.linaria-cache
 /node_modules
 /dist
