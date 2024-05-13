@@ -25,7 +25,7 @@ export default function () {
   }, []);
   return (
     <>
-      <h1>Quick SSR Demo</h1>
+      <h1 className='title'>Quick SSR Demo</h1>
       <div>Mounted: { String(state.mounted) }</div>
       <div>Location: { location.pathname }</div>
       <div>

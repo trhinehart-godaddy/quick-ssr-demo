@@ -6,6 +6,7 @@ import { StaticRouter } from 'react-router-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import express from 'express';
+import { readFileSync } from 'node:fs';
 
 import App from '../common/components/app';
 import rootReducer from '../common/store/reducer';
@@ -17,6 +18,8 @@ app.get('/favicon.ico', (req, res) => res.status(404).end());
 app.use('/public', express.static(path.resolve('./dist/webpack')));
 
 app.get('*', (req, res) => {
+  const css = readFileSync(path.resolve(__dirname, '../../dist/styles/index.css'), 'utf8');
+
   // Create store, pass initial state (eg: locale, i18n, route)
   const store = createStore(rootReducer, { count: 0, mounted: false });
 
@@ -54,6 +57,7 @@ app.get('*', (req, res) => {
     <html>
     <head>
       <title>Quick SSR Demo</title>
+      <style type="text/css">${ css }</style>
     </head>
     <body>
       <div id="editor">${ markup }</div>
