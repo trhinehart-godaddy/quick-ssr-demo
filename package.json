@@ -8,11 +8,13 @@
     "prebuild": "npm run clean",
     "build": "run-p build:*",
     "build:server": "babel src --out-dir dist/src --ignore src/client",
+    "build:styles": "sass src/common:dist",
     "build:webpack": "webpack --mode production",
     "start": "node dist/src/server/index.js",
     "prewatch": "npm run clean",
     "watch": "run-p watch:*",
     "watch:server": "nodemon --watch src/server --watch src/common --exec babel-node src/server/index.js",
+    "watch:styles": "sass --watch src/common:dist",
     "watch:webpack": "webpack watch --mode development"
   },
   "dependencies": {
@@ -34,6 +36,7 @@
     "nodemon": "^3.1.0",
     "npm-run-all": "^4.1.5",
     "rimraf": "^5.0.5",
+    "sass": "^1.77.1",
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4"
   },
