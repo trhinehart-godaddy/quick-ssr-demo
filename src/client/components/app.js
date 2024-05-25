@@ -1,7 +1,9 @@
 import React from 'react';
 
+import './app.scss';
+
 export default () => {
   return (
-    <div>Client App Component</div>
+    <div className='heading'>Client App Component</div>
   )
 }
