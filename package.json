@@ -12,7 +12,7 @@
     "start": "node dist/webpack/server/server.js",
     "prewatch": "npm run clean",
     "watch": "run-p watch:*",
-    "watch:server": "nodemon --ext js,scss --watch src/server --watch src/common --exec \"npm run build:server -- --mode development && node dist/webpack/server/server.js\"",
+    "watch:server": "nodemon --ext js,scss --watch src/server --watch src/common --exec \"npm run build:server -- --mode development && npm run start\"",
     "watch:client": "webpack watch --mode development --config webpack.client.config.js"
   },
   "dependencies": {
