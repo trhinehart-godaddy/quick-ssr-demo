@@ -7,6 +7,11 @@ module.exports = {
     filename: 'client.js',
     path: path.resolve('./dist/webpack/client')
   },
+  plugins: [
+    new webpack.IgnorePlugin({
+      resourceRegExp: /\/server\//
+    })
+  ],
   module: {
     rules: [
       {
