@@ -13,7 +13,7 @@
     "prewatch": "npm run clean",
     "watch": "run-p watch:*",
     "watch:server": "nodemon --ext js,scss --watch src/server --watch src/common --exec \"npm run build:server -- --mode development && npm run start\"",
-    "watch:client": "webpack watch --mode development --config webpack.client.config.js"
+    "watch:client": "npm run build:client -- --watch --mode development"
   },
   "dependencies": {
     "express": "^4.19.2",
