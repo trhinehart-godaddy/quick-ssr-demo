@@ -1,11 +1,25 @@
+const webpack = require('webpack');
 const path = require('node:path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-  entry: './src/client/index.js',
+  mode: 'production',
+  entry: './src/server/index.js',
+  target: 'node',
+  externals: [nodeExternals()],
   output: {
-    filename: 'app.js',
-    path: path.resolve('./dist/webpack')
+    filename: 'server.js',
+    path: path.resolve(__dirname, './dist/webpack/server')
   },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'styles.css'
+    }),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /\/client\//
+    })
+  ],
   module: {
     rules: [
       {
@@ -26,7 +40,7 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
@@ -38,7 +52,7 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {

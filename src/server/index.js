@@ -1,27 +1,27 @@
-import path from 'node:path';
+import path from 'path';
+import {readFileSync} from 'fs';
 
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import {StaticRouter} from 'react-router-dom';
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
 import express from 'express';
-import { readFileSync } from 'node:fs';
+import {collect} from 'linaria/server';
 
 import App from '../common/components/app';
 import rootReducer from '../common/store/reducer';
-import { increaseCount } from '../common/store/actions/count';
+import {increaseCount} from '../common/store/actions/count';
 
 const app = express();
+const css = readFileSync(path.resolve(__dirname, '../../webpack/server/styles.css'), 'utf8');
 
 app.get('/favicon.ico', (req, res) => res.status(404).end());
-app.use('/public', express.static(path.resolve('./dist/webpack')));
+app.use('/public', express.static(path.resolve('./dist/webpack/client')));
 
 app.get('*', (req, res) => {
-  const css = readFileSync(path.resolve(__dirname, '../../dist/styles/index.css'), 'utf8');
-
   // Create store, pass initial state (eg: locale, i18n, route)
-  const store = createStore(rootReducer, { count: 0, mounted: false });
+  const store = createStore(rootReducer, {count: 0, mounted: false});
 
   // Optionally dispatch actions to modify state
   store.dispatch(increaseCount());
@@ -31,12 +31,13 @@ app.get('*', (req, res) => {
 
   // Render app to string
   const markup = ReactDOM.renderToString(
-    <StaticRouter location={ req.url } context={routerContext}>
-      <Provider store={ store }>
+    <StaticRouter location={req.url} context={routerContext}>
+      <Provider store={store}>
         <App/>
       </Provider>
     </StaticRouter>
   );
+  const {critical: criticalCss} = collect(markup, css);
 
   // Check router context for redirects
   if (routerContext.url) {
@@ -53,18 +54,18 @@ app.get('*', (req, res) => {
 
   // Return HTML and state
   res.send(`
-    <doctype html>
-    <html>
+    <!doctype html>
+    <html lang="en">
     <head>
       <title>Quick SSR Demo</title>
-      <style type="text/css">${ css }</style>
+      <style type="text/css">${criticalCss}</style>
     </head>
     <body>
-      <div id="editor">${ markup }</div>
+      <div id="editor">${markup}</div>
       <script> 
-        window.__STATE__ = ${ JSON.stringify(state) };
+        window.__STATE__ = ${JSON.stringify(state)};
       </script>
-      <script src="/public/app.js"></script>
+      <script src="/public/client.js"></script>
     </body>
     </html>
   `);
