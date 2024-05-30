@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, useLocation } from 'react-router';
-import { Link } from 'react-router-dom';
 
 import Suspense from './suspense';
 import { mountApp } from '../store/actions/app';
@@ -10,8 +9,7 @@ import Home from './routes/home';
 import Foo from './routes/foo';
 import Bar from './routes/bar';
 import NotFound from './routes/404';
-
-import './app.scss';
+import { Link } from 'react-router-dom';
 
 const Client = React.lazy(() => (
   import(/* webpackChunkName: "client" */ '../../client/components/app')
